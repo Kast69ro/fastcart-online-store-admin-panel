@@ -5,9 +5,9 @@ export const getProducts = createAsyncThunk(
   "products/getProducts",
   async () => {
     try {
-      let responce = await axiosRequest.get("/Product/get-products");
+      let response = await axiosRequest.get("/Product/get-products");
 
-      return responce.data.data.products;
+      return response.data?.data?.products;
     } catch (error) {
       console.log(error);
     }
@@ -16,8 +16,20 @@ export const getProducts = createAsyncThunk(
 
 export const deleteProduct = createAsyncThunk(
   "products/deleteProduct",
-  async (id,{dispatch}) => {
+  async (id, { dispatch }) => {
     await axiosRequest.delete(`/Product/delete-product?id=${id}`);
-    dispatch(getProducts())
+    dispatch(getProducts());
+  }
+);
+
+export const addProduct = createAsyncThunk(
+  "product/addProduct",
+  async (obj, { dispatch }) => {
+    try {
+      await axiosRequest.post("/Product/add-product", obj);
+      // dispatch(getProducts());
+    } catch (error) {
+      console.log(error);
+    }
   }
 );

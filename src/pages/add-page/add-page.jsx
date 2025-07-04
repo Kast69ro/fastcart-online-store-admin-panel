@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 import {
   Box,
   Button,
   Chip,
   Grid,
-  IconButton,
   InputLabel,
   MenuItem,
   Select,
@@ -17,9 +17,45 @@ import {
   Paper,
 } from "@mui/material";
 import { Upload } from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
+import { getBrand } from "../../entities/api/brand/brand";
+import { getCategory } from "../../entities/api/category/category";
+import { getSubCategory } from "../../entities/api/sub-category/sub-categore";
+import { getColor } from "../../entities/api/color/color";
+import { addProduct } from "../../entities/api/products/products";
+
+
 
 export default function AddProduct() {
+  const brand = useSelector((state) => state.brands.brandData);
+  const categories = useSelector((state) => state.category.categoryData);
+  const subCategories = useSelector(
+    (state) => state.subCategory.subCategoryData
+  );
+  const colors = useSelector((state) => state.color?.colorData);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getBrand());
+    dispatch(getCategory());
+    dispatch(getSubCategory());
+    dispatch(getColor());
+  }, []);
+
+  const [productName, setProductName] = useState("");
+  const [description, setDescription] = useState("");
+  const [category, setCategory] = useState("");
+  const [subCategory, setSubCategory] = useState("");
+  const [price, setPrice] = useState("");
+  const [discount, setDiscount] = useState("");
+  const [count, setCount] = useState("");
+  const [brands, setBrand] = useState("");
+  const [files, setFiles] = useState([]);
   const [colour, setColour] = useState("");
+
+  const [previews, setPreviews] = useState([]);
+
   const [tags, setTags] = useState([
     "T-Shirt",
     "Men Clothes",
@@ -29,6 +65,51 @@ export default function AddProduct() {
     size: ["S", "M", "L", "XL"],
     weight: ["10", "20", "30", "40"],
   });
+
+  const handleSave = () => {
+    const newProduct = new FormData();
+    newProduct.append("BrandId", brands);
+    newProduct.append("ColorId", colour);
+    newProduct.append("ProductName", productName);
+    newProduct.append("Description", description);
+    newProduct.append("Quantity", count);
+    newProduct.append("Code", uuidv4());
+    newProduct.append("Price", price);
+    newProduct.append("HasDiscount", false);
+    newProduct.append("SubCategoryId", subCategory);
+    for (let i = 0; i < files.length; i++) {
+      newProduct.append("Images", files[i]);
+    }
+    dispatch(addProduct(newProduct));
+  };
+
+  const getBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const handleFileChange = async (event) => {
+    const selectedFiles = Array.from(event.target.files);
+    setFiles(selectedFiles);
+
+    const previewsWithIndex = await Promise.all(
+      selectedFiles.map(async (file) => {
+        const base64 = await getBase64(file);
+        return { file, preview: base64 };
+      })
+    );
+    setPreviews(previewsWithIndex);
+  };
+  const handleRemoveImage = (index) => {
+    const newFiles = files.filter((_, i) => i !== index);
+    const newPreviews = previews.filter((_, i) => i !== index);
+    setFiles(newFiles);
+    setPreviews(newPreviews);
+  };
 
   return (
     <Box p={4}>
@@ -40,38 +121,93 @@ export default function AddProduct() {
         <Grid item xs={12} md={8}>
           <Grid container spacing={2}>
             <Grid item xs={8}>
-              <TextField fullWidth label="Product name" />
+              <TextField
+                fullWidth
+                onChange={(e) => setProductName(e.target.value)}
+                label="Product name"
+              />
             </Grid>
             <Grid item xs={4}>
-              <TextField fullWidth label="Code" />
+              <TextField  fullWidth label="Code" />
             </Grid>
             <Grid item xs={12}>
-              <TextField fullWidth label="Description" multiline rows={4} />
+              <TextField
+                fullWidth
+                onChange={(e) => setDescription(e.target.value)}
+                label="Description"
+                multiline
+                rows={4}
+              />
             </Grid>
             <Grid item xs={6}>
               <FormControl fullWidth>
                 <InputLabel>Categories</InputLabel>
-                <Select label="Categories">
-                  <MenuItem value="">Select</MenuItem>
+                <Select
+                  onChange={(e) => setCategory(e.target.value)}
+                  label="Categories"
+                >
+                  {categories?.map((el) => {
+                    return (
+                      <MenuItem key={el.id} value={el.id}>
+                        {el.categoryName}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
+              <FormControl fullWidth sx={{ marginTop: "20px" }}>
+                <InputLabel>Sub-Categories</InputLabel>
+                <Select
+                  onChange={(e) => setSubCategory(e.target.value)}
+                  label="SubCategories"
+                >
+                  {subCategories?.map((el) => {
+                    return (
+                      <MenuItem key={el.id} value={el.id}>
+                        {el.subCategoryName}
+                      </MenuItem>
+                    );
+                  })}
                 </Select>
               </FormControl>
             </Grid>
             <Grid item xs={6}>
               <FormControl fullWidth>
                 <InputLabel>Brands</InputLabel>
-                <Select label="Brands">
-                  <MenuItem value="">Select</MenuItem>
+                <Select
+                  onChange={(e) => setBrand(e.target.value)}
+                  label="Brands"
+                >
+                  {brand?.map((el) => {
+                    return (
+                      <MenuItem key={el.id} value={el.id}>
+                        {el.brandName}
+                      </MenuItem>
+                    );
+                  })}
                 </Select>
               </FormControl>
             </Grid>
             <Grid item xs={4}>
-              <TextField fullWidth label="Product price" />
+              <TextField
+                fullWidth
+                onChange={(e) => setPrice(e.target.value)}
+                label="Product price"
+              />
             </Grid>
             <Grid item xs={4}>
-              <TextField fullWidth label="Discount" />
+              <TextField
+                fullWidth
+                onChange={(e) => setDiscount(e.target.value)}
+                label="Discount"
+              />
             </Grid>
             <Grid item xs={4}>
-              <TextField fullWidth label="Count" />
+              <TextField
+                fullWidth
+                onChange={(e) => setCount(e.target.value)}
+                label="Count"
+              />
             </Grid>
             <Grid item xs={12}>
               <Box display="flex" alignItems="center" gap={2}>
@@ -136,34 +272,36 @@ export default function AddProduct() {
         <Grid item xs={12} md={4}>
           <Box display="flex" justifyContent="flex-end" gap={2} mb={2}>
             <Button variant="text">Cancel</Button>
-            <Button variant="contained">Save</Button>
+            <Button onClick={handleSave} variant="contained">
+              Save
+            </Button>
           </Box>
           <Box mb={4}>
-            <Box mb={3} sx={{display:'flex',alignItems:'center',justifyContent:'space-between'}}>
-                <Typography variant="subtitle2" >
-              Colour:
-            </Typography>
-            <Button size="small">Create new</Button>
+            <Box
+              mb={3}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <Typography variant="subtitle2">Colour:</Typography>
+              <Button size="small">Create new</Button>
             </Box>
             <Box display="flex" gap={1} flexWrap="wrap">
-              {[
-                "#3B82F6",
-                "#EF4444",
-                "#F59E0B",
-                "#10B981",
-                "#6366F1",
-                "#111827",
-              ].map((c) => (
+              {colors.map((el) => (
                 <Box
-                  key={c}
-                  onClick={() => setColour(c)}
+                  key={el.id}
+                  onClick={() => setColour(el.id)}
                   sx={{
                     width: 28,
                     height: 28,
                     borderRadius: "50%",
-                    backgroundColor: c,
+                    backgroundColor: el.colorName,
                     border:
-                      colour === c ? "2px solid black" : "1px solid lightgray",
+                      colour === el.colorName
+                        ? "2px solid black"
+                        : "1px solid lightgray",
                     cursor: "pointer",
                   }}
                 />
@@ -199,12 +337,9 @@ export default function AddProduct() {
               accept="image/*"
               multiple
               hidden
-              onChange={(e) => {
-                const files = e.target.files;
-                console.log(files);
-                // handle upload here
-              }}
+              onChange={handleFileChange}
             />
+
             <Upload size={20} style={{ marginBottom: 4, margin: "auto" }} />
             <Typography variant="body2">
               Click to upload or drag and drop
@@ -213,6 +348,44 @@ export default function AddProduct() {
               (SVG, JPG, PNG, or GIF maximum 900×400)
             </Typography>
           </Paper>
+          <Box display="flex" flexWrap="wrap" gap={1} mt={2}>
+            {previews.map((item, index) => (
+              <Box key={index} position="relative">
+                <img
+                  src={item.preview}
+                  alt={`preview-${index}`}
+                  style={{
+                    width: 80,
+                    height: 80,
+                    objectFit: "cover",
+                    borderRadius: 8,
+                  }}
+                />
+                <Button
+                  size="small"
+                  onClick={() => handleRemoveImage(index)}
+                  sx={{
+                    position: "absolute",
+                    top: -8,
+                    right: -8,
+                    minWidth: "auto",
+                    width: 20,
+                    height: 20,
+                    borderRadius: "50%",
+                    padding: 0,
+                    fontSize: 12,
+                    lineHeight: 1,
+                    backgroundColor: "white",
+                    color: "red",
+                    border: "1px solid lightgray",
+                    zIndex: 1,
+                  }}
+                >
+                  ×
+                </Button>
+              </Box>
+            ))}
+          </Box>
         </Grid>
       </Grid>
     </Box>
