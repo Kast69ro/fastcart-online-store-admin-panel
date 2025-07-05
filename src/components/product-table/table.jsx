@@ -8,6 +8,8 @@ import { useEffect } from "react";
 import { deleteProduct, getProducts } from "../../entities/api/products/products";
 import { useDispatch, useSelector } from "react-redux";
 import { API } from "../../config/utilits/utilits";
+import { getProductById } from "../../entities/api/product-by-id/product";
+import { Link } from "react-router-dom";
 
 
 
@@ -70,9 +72,11 @@ export default function ProductsTable() {
     sortable: false,
     renderCell: (params) => (
       <Box>
-        <IconButton size="small" color="primary">
+        <Link to='/edit-product'>
+        <IconButton onClick={()=>dispatch(getProductById(params.id))} size="small" color="primary">
           <Edit fontSize="small" />
         </IconButton>
+        </Link>
         <IconButton size="small" color="error"
         onClick={()=>dispatch(deleteProduct(params.id))}>
           <Delete fontSize="small" />

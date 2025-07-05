@@ -6,6 +6,7 @@ import Products from "/src/pages/Products/products";
 import Other from "/src/pages/Other/other";
 import LogIn from "./pages/log-in/log-in";
 import AddProduct from "./pages/add-page/add-page";
+import Edit from "./pages/edit/edit";
 function App() {
   const router = createBrowserRouter([
     {
@@ -30,8 +31,12 @@ function App() {
           element: <Other />,
         },
         {
-          path: "/add",
+          path: "/add-product",
           element: <AddProduct />,
+        },
+        {
+          path: "/edit-product",
+          element: <Edit />,
         },
         
       ],
