@@ -9,6 +9,7 @@ import AddProduct from "./pages/add-page/add-page";
 import Edit from "./pages/edit/edit";
 import OtherCategory from "./components/other-category/other-category";
 import OtherBrand from "./components/other-brand/other-brand";
+import OtherSubcategory from "./components/other-subcategory/other-subcategory";
 function App() {
   const router = createBrowserRouter([
     {
@@ -37,19 +38,19 @@ function App() {
         },
         {
           path: "other",
-          element: <Other />, // Layout для nested routes
+          element: <Other />, 
           children: [
             {
-              index: true, // /other
+              index: true, 
               element: <OtherCategory />,
             },
             {
-              path: "brands", // /other/brands
+              path: "brands", 
               element: <OtherBrand/>,
             },
             {
-              path: "subcategories", // /other/subcategories
-              element: <div>Subcategories Page</div>,
+              path: "subcategories",
+              element: <OtherSubcategory/>,
             },
           ],
         },
