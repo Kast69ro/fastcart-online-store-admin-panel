@@ -7,6 +7,7 @@ import Other from "/src/pages/Other/other";
 import LogIn from "./pages/log-in/log-in";
 import AddProduct from "./pages/add-page/add-page";
 import Edit from "./pages/edit/edit";
+import OtherCategory from "./components/other-category/other-category";
 function App() {
   const router = createBrowserRouter([
     {
@@ -14,38 +15,51 @@ function App() {
       element: <Dashbord />,
       children: [
         {
-          path: "/",
           index: true,
           element: <Dashboard />,
         },
         {
-          path: "/orders",
+          path: "orders",
           element: <Orders />,
         },
         {
-          path: "/products",
+          path: "products",
           element: <Products />,
         },
         {
-          path: "/other",
-          element: <Other />,
-        },
-        {
-          path: "/add-product",
+          path: "add-product",
           element: <AddProduct />,
         },
         {
-          path: "/edit-product",
+          path: "edit-product",
           element: <Edit />,
         },
-        
+        {
+          path: "other",
+          element: <Other />, // Layout для nested routes
+          children: [
+            {
+              index: true, // /other
+              element: <OtherCategory />,
+            },
+            {
+              path: "brands", // /other/brands
+              element: <div>Brands Page</div>,
+            },
+            {
+              path: "subcategories", // /other/subcategories
+              element: <div>Subcategories Page</div>,
+            },
+          ],
+        },
       ],
     },
     {
-      path : "/login" ,
-      element : <LogIn/>
-    }
+      path: "/login",
+      element: <LogIn />,
+    },
   ]);
+
   return <RouterProvider router={router} />;
 }
 

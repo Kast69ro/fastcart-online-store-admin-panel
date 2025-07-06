@@ -1,7 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { defaultAxios } from "../../../config/axios/axios";
-
-
+import { axiosRequest, defaultAxios } from "../../../config/axios/axios";
 
 export const getCategory = createAsyncThunk(
   "category/getCategory",
@@ -14,3 +12,27 @@ export const getCategory = createAsyncThunk(
     }
   }
 );
+
+export const addCategory = createAsyncThunk(
+  "category/addCategory",
+  async (obj, { dispatch }) => {
+    await axiosRequest.post("/Category/add-category", obj);
+    dispatch(getCategory());
+  }
+);
+
+export const deleteCategory = createAsyncThunk(
+  "category/deleteCategory",
+  async (id, { dispatch }) => {
+    await axiosRequest.delete(`/Category/delete-category?id=${id}`);
+    dispatch(getCategory());
+  }
+);
+
+export const editCategory = createAsyncThunk(
+  'category/editCategory',
+  async(obj,{dispatch})=>{
+    await axiosRequest.put('/Category/update-category',obj)
+    dispatch(getCategory())
+  }
+)

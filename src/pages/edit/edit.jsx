@@ -106,7 +106,6 @@ setSubCategory(subCategoryMatch ? subCategoryMatch.id : "");
    if (product?.images) {
     setExistingImages(product.images);
   }
-  console.log(product);
   
 }, [product, brand, categories, subCategories]);
 
