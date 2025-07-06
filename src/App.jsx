@@ -8,6 +8,7 @@ import LogIn from "./pages/log-in/log-in";
 import AddProduct from "./pages/add-page/add-page";
 import Edit from "./pages/edit/edit";
 import OtherCategory from "./components/other-category/other-category";
+import OtherBrand from "./components/other-brand/other-brand";
 function App() {
   const router = createBrowserRouter([
     {
@@ -44,7 +45,7 @@ function App() {
             },
             {
               path: "brands", // /other/brands
-              element: <div>Brands Page</div>,
+              element: <OtherBrand/>,
             },
             {
               path: "subcategories", // /other/subcategories
