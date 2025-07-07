@@ -13,24 +13,41 @@ export const getBrand = createAsyncThunk("brands/getBrand", async () => {
 export const addBrand = createAsyncThunk(
   "brands/addBrand",
   async (name, { dispatch }) => {
-    await axiosRequest.post(`/Brand/add-brand?BrandName=${name}`);
-    dispatch(getBrand());
+    try {
+      await axiosRequest.post(`/Brand/add-brand?BrandName=${name}`);
+      dispatch(getBrand());
+      toast.success("brand successfully added");
+    } catch (error) {
+      toast.error("something went wrong, contact support");
+    }
   }
 );
 
 export const editBrand = createAsyncThunk(
   "brands/editBrand",
   async ({ id, name }, { dispatch }) => {
-    await axiosRequest.put(`Brand/update-brand?Id=${id}&BrandName=${name}`);
+    try {
+      await axiosRequest.put(`Brand/update-brand?Id=${id}&BrandName=${name}`);
     dispatch(getBrand());
+    toast.success('brand successfully edited')
+    } catch (error) {
+      toast.error('something went wrong, contact support')
+      
+    }
   }
 );
 
-
 export const deleteBrand = createAsyncThunk(
   "brands/deleteBrand",
-  async(id,{dispatch})=>{
-    await axiosRequest.delete(`/Brand/delete-brand?id=${id}`)
-    dispatch(getBrand())
+  async (id, { dispatch }) => {
+   try {
+     await axiosRequest.delete(`/Brand/delete-brand?id=${id}`);
+    dispatch(getBrand());
+    toast.success('brand successfully deleted')
+    
+   } catch (error) {
+    toast.error('something went wrong, contact support')
+    
+   }
   }
-)
+);

@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { axiosRequest, defaultAxios } from "../../../config/axios/axios";
+import { axiosRequest } from "../../../config/axios/axios";
+import { toast } from "sonner";
 
 export const getProducts = createAsyncThunk(
   "products/getProducts",
@@ -28,8 +29,10 @@ export const addProduct = createAsyncThunk(
     try {
       await axiosRequest.post("/Product/add-product", obj);
       dispatch(getProducts());
+      toast.success('Product added')
     } catch (error) {
       console.log(error);
+      toast.error('something went wrong, contact support')
     }
   }
 );
@@ -57,7 +60,9 @@ export const editProduct = createAsyncThunk(
 
       await axiosRequest.put(`/Product/update-product?${query}`)
       dispatch(getProducts())
+      toast.success('edit is succssesful')
     } catch (error) {
+      toast.error('something went wrong, contact support')
       console.log(error)
     }
   }

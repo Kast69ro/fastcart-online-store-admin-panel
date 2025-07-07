@@ -1,4 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Toaster } from "sonner";
+
 import Dashbord from "./components/layouts/Dashboard/dashboard";
 import Dashboard from "/src/pages/Dashboard/dashboard";
 import Orders from "/src/pages/Orders/orders";
@@ -10,6 +12,7 @@ import Edit from "./pages/edit/edit";
 import OtherCategory from "./components/other-category/other-category";
 import OtherBrand from "./components/other-brand/other-brand";
 import OtherSubcategory from "./components/other-subcategory/other-subcategory";
+
 function App() {
   const router = createBrowserRouter([
     {
@@ -38,19 +41,19 @@ function App() {
         },
         {
           path: "other",
-          element: <Other />, 
+          element: <Other />,
           children: [
             {
-              index: true, 
+              index: true,
               element: <OtherCategory />,
             },
             {
-              path: "brands", 
-              element: <OtherBrand/>,
+              path: "brands",
+              element: <OtherBrand />,
             },
             {
               path: "subcategories",
-              element: <OtherSubcategory/>,
+              element: <OtherSubcategory />,
             },
           ],
         },
@@ -62,7 +65,12 @@ function App() {
     },
   ]);
 
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <RouterProvider router={router} />
+      <Toaster richColors position="bottom-right" />
+    </>
+  );
 }
 
 export default App;

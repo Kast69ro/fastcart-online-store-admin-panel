@@ -3,6 +3,7 @@ import { AppProvider, DashboardLayout, PageContainer } from "@toolpad/core";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import BarChartIcon from "@mui/icons-material/BarChart";
+import LogoutIcon from '@mui/icons-material/Logout';
 import LayersIcon from "@mui/icons-material/Layers";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
@@ -45,12 +46,14 @@ const Dashbord = () => {
   const demoWindow = typeof window !== "undefined" ? window : undefined;
 
   return (
+      <div className="max-w-[1920px] mx-auto flex justify-center">
     <AppProvider
       navigation={NAVIGATION}
       router={router}
       theme={demoTheme}
       window={demoWindow}
     >
+    
       <DashboardLayout>
         <PageContainer>
           {/* Child routes will render here */}
@@ -58,6 +61,7 @@ const Dashbord = () => {
         </PageContainer>
       </DashboardLayout>
     </AppProvider>
+      </div>
   );
 };
 

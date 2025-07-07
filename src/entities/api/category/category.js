@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { axiosRequest, defaultAxios } from "../../../config/axios/axios";
+import { toast } from "sonner";
 
 export const getCategory = createAsyncThunk(
   "category/getCategory",
@@ -24,15 +25,25 @@ export const addCategory = createAsyncThunk(
 export const deleteCategory = createAsyncThunk(
   "category/deleteCategory",
   async (id, { dispatch }) => {
-    await axiosRequest.delete(`/Category/delete-category?id=${id}`);
-    dispatch(getCategory());
+    try {
+      await axiosRequest.delete(`/Category/delete-category?id=${id}`);
+      dispatch(getCategory());
+      toast.success("category successfully deleted");
+    } catch (error) {
+      toast.error("something went wrong, contact support");
+    }
   }
 );
 
 export const editCategory = createAsyncThunk(
-  'category/editCategory',
-  async(obj,{dispatch})=>{
-    await axiosRequest.put('/Category/update-category',obj)
-    dispatch(getCategory())
+  "category/editCategory",
+  async (obj, { dispatch }) => {
+    try {
+      await axiosRequest.put("/Category/update-category", obj);
+      dispatch(getCategory());
+      toast.success("category successfully edited");
+    } catch (error) {
+      toast.error("something went wrong, contact support");
+    }
   }
-)
+);
