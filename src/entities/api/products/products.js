@@ -51,7 +51,7 @@ export const editProduct = createAsyncThunk(
         Quantity: product.Quantity,
         Code: product.Code,
         Price: product.Price,
-        HasDiscount: product.HasDiscount,
+        HasDiscount: product.HasDiscount, 
         DiscountPrice: product.DiscountPrice ,
         SubCategoryId: product.SubCategoryId,
         Weight: 'XL',

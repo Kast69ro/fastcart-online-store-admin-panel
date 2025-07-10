@@ -12,7 +12,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverRoundedIcon from "@mui/icons-material/DeleteForeverRounded";
 
 import TextField from "@mui/material/TextField";
-import { Add, Delete } from "@mui/icons-material";
+import { Add } from "@mui/icons-material";
 
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";

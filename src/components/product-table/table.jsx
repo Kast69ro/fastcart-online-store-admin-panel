@@ -1,7 +1,7 @@
 import { DataGrid } from "@mui/x-data-grid";
-import { Paper, Box, IconButton, Avatar } from "@mui/material";
+import {  Box, IconButton, Avatar } from "@mui/material";
 import { Edit, Delete } from "@mui/icons-material";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProducts, deleteProduct } from "../../entities/api/products/products";
 import { getProductById } from "../../entities/api/product-by-id/product";

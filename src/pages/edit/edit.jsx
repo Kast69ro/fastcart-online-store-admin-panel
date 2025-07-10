@@ -395,7 +395,6 @@ export default function Edit() {
               onClick={() => document.getElementById("file-upload")?.click()}
             >
               <input
-                value={files}
                 id="file-upload"
                 type="file"
                 accept="image/*"

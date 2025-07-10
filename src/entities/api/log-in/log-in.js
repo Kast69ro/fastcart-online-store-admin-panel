@@ -5,7 +5,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "sonner";
 import { defaultAxios } from "../../../config/axios/axios";
-import { checkGridRowIdIsValid } from "@mui/x-data-grid";
 
 export const logIn = createAsyncThunk(
   "login/logIn",

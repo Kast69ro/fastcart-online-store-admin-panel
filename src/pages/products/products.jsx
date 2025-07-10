@@ -8,11 +8,9 @@ import {
   Button,
   IconButton,
   InputAdornment,
-  MenuItem,
-  Select,
   TextField,
 } from "@mui/material";
-import { Add, Delete, Edit, Search } from "@mui/icons-material";
+import { Add, Delete,  Search } from "@mui/icons-material";
 
 const Products = () => {
   const navigate = useNavigate()

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, TextField, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import { addBrand, deleteBrand, editBrand, getBrand } from "../../entities/api/brand/brand";
 
 
