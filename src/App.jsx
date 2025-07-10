@@ -1,7 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Toaster } from "sonner";
 
-import Dashboard from "/src/pages/Dashboard/dashboard";
 import Orders from "/src/pages/Orders/orders";
 import Products from "/src/pages/Products/products";
 import Other from "/src/pages/Other/other";
@@ -12,6 +11,7 @@ import OtherCategory from "./components/other-category/other-category";
 import OtherBrand from "./components/other-brand/other-brand";
 import OtherSubcategory from "./components/other-subcategory/other-subcategory";
 import Dashbord from "./components/layouts/dashboard/dashboard";
+import Dashboards from "./pages/dashboard/dashboard";
 
 function App() {
   const router = createBrowserRouter([
@@ -21,7 +21,7 @@ function App() {
       children: [
         {
           index: true,
-          element: <Dashboard />,
+          element: <Dashboards />,
         },
         {
           path: "orders",

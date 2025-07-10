@@ -7,7 +7,7 @@ import three from "#/div.MuiStack-root (1).png";
 import Card from "../../components/dashboard-card/card";
 import Tables from "../../components/dashboard-table/table";
 
-const Dashboard = () => {
+const Dashboards = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -71,4 +71,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Dashboards;
