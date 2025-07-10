@@ -12,7 +12,7 @@ import { Add, Delete, Edit, Search } from "@mui/icons-material";
 import Tables from "../../components/order-table/table";
 import { useNavigate } from "react-router-dom";
 
-export default function OrdersHeader() {
+export default function Orders() {
   const navigate = useNavigate()
 
   const [filter, setFilter] = useState("Newest");

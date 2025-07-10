@@ -1,9 +1,8 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Toaster } from "sonner";
 
-import Orders from "/src/pages/Orders/orders";
-import Products from "/src/pages/Products/products";
-import Other from "/src/pages/Other/other";
+import Products from "./pages/products/products";
+import Other from "./pages/other/other";
 import LogIn from "./pages/log-in/log-in";
 import AddProduct from "./pages/add-page/add-page";
 import Edit from "./pages/edit/edit";
@@ -12,6 +11,7 @@ import OtherBrand from "./components/other-brand/other-brand";
 import OtherSubcategory from "./components/other-subcategory/other-subcategory";
 import Dashbord from "./components/layouts/dashboard/dashboard";
 import Dashboards from "./pages/dashboard/dashboard";
+import Orders from "./pages/orders/orders";
 
 function App() {
   const router = createBrowserRouter([
